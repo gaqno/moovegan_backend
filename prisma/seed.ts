@@ -6,8 +6,9 @@ const userData: Prisma.UserCreateInput[] = [
   {
     firstName: 'Gabriel',
     lastName: 'Aquino',
-    password: '#*ASBXHJKAS8123780bxA801230#!@',
-    email: 'alice@prisma.io',
+    password: 'stonks',
+    email: 'alices@prisma.io',
+    imageUrl: 'http://api.github.com/users/gaqno.png',
     posts: {
       create: [
         {

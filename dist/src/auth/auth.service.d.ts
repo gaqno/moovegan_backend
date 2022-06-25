@@ -9,6 +9,6 @@ export declare class AuthService {
     private jwtService;
     private readonly usersService;
     constructor(prismaService: PrismaService, jwtService: JwtService, usersService: UsersService);
-    login(loginDto: LoginDto): Promise<AuthResponse>;
     register(createUserDto: CreateUserDto): Promise<AuthResponse>;
+    login(loginDto: LoginDto): Promise<AuthResponse>;
 }

@@ -18,6 +18,7 @@ model User {
   password  String
   firstName String?
   lastName  String?
+  imageUrl  String?
   role      Role     @default(USER)
   posts     Post[]
 }
@@ -27,10 +28,16 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   published Boolean  @default(false)
-  title     String   @db.VarChar(255)
-  content   String   @db.Text
+  title     String   @db.Text
+  content   String   @db.VarChar(255)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
+}
+
+model Cards {
+  id        Int     @id @default(autoincrement())
+  published Boolean @default(false)
+  content   String  @db.VarChar(255)
 }
 
 enum Role {

@@ -21,6 +21,13 @@ let AuthService = class AuthService {
         this.jwtService = jwtService;
         this.usersService = usersService;
     }
+    async register(createUserDto) {
+        const user = await this.usersService.createUser(createUserDto);
+        return {
+            token: this.jwtService.sign({ email: user.email }),
+            user,
+        };
+    }
     async login(loginDto) {
         const { email, password } = loginDto;
         const user = await this.prismaService.user.findUnique({
@@ -37,13 +44,6 @@ let AuthService = class AuthService {
             token: this.jwtService.sign({
                 email,
             }),
-            user,
-        };
-    }
-    async register(createUserDto) {
-        const user = await this.usersService.createUser(createUserDto);
-        return {
-            token: this.jwtService.sign({ username: user.email }),
             user,
         };
     }
