@@ -1,8 +1,8 @@
 {
-  "name": "jwt",
+  "name": "moovegan_backend",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Projeto para TCC para Faculdade das Américas",
+  "author": "Gabriel Aquino",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
