@@ -22,11 +22,15 @@ let AuthService = class AuthService {
         this.usersService = usersService;
     }
     async register(createUserDto) {
+        const { email } = createUserDto;
+        const userExists = await this.prismaService.user.findUnique({
+            where: { email },
+        });
+        if (userExists) {
+            throw new common_1.NotFoundException('Email already exists');
+        }
         const user = await this.usersService.createUser(createUserDto);
-        return {
-            token: this.jwtService.sign({ email: user.email }),
-            user,
-        };
+        return { success: 'Registered user sucessfully, welcome to MooVegan 🐄' };
     }
     async login(loginDto) {
         const { email, password } = loginDto;
@@ -34,16 +38,14 @@ let AuthService = class AuthService {
             where: { email },
         });
         if (!user) {
-            throw new common_1.NotFoundException('user not found');
+            throw new common_1.NotFoundException('User not found');
         }
         const validatePassword = await bcrypt.compare(password, user.password);
         if (!validatePassword) {
-            throw new common_1.UnauthorizedException('invalid password');
+            throw new common_1.UnauthorizedException('Invalid password');
         }
         return {
-            token: this.jwtService.sign({
-                email,
-            }),
+            token: this.jwtService.sign({ email }),
             user,
         };
     }

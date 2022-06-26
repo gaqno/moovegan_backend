@@ -23,7 +23,7 @@ export class UsersService {
     return user;
   }
 
-  async createUser(data: CreateUserDto): Promise<User> {
+  async createUser(data: CreateUserDto) {
     const existing = await this.prismaService.user.findUnique({
       where: {
         email: data.email,

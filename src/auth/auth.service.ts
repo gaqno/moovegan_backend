@@ -19,29 +19,32 @@ export class AuthService {
     private readonly usersService: UsersService,
   ) {}
 
-  async register(createUserDto: CreateUserDto): Promise<AuthResponse> {
+  async register(createUserDto: CreateUserDto) {
+    const { email } = createUserDto;
+    const userExists = await this.prismaService.user.findUnique({
+      where: { email },
+    });
+    if (userExists) {
+      throw new NotFoundException('Email already exists');
+    }
     const user = await this.usersService.createUser(createUserDto);
-    return {
-      token: this.jwtService.sign({ email: user.email }),
-      user,
-    };
+    return { success: 'Registered user sucessfully, welcome to MooVegan 🐄' };
   }
+
   async login(loginDto: LoginDto): Promise<AuthResponse> {
     const { email, password } = loginDto;
     const user = await this.prismaService.user.findUnique({
       where: { email },
     });
     if (!user) {
-      throw new NotFoundException('user not found');
+      throw new NotFoundException('User not found');
     }
     const validatePassword = await bcrypt.compare(password, user.password);
     if (!validatePassword) {
-      throw new UnauthorizedException('invalid password');
+      throw new UnauthorizedException('Invalid password');
     }
     return {
-      token: this.jwtService.sign({
-        email,
-      }),
+      token: this.jwtService.sign({ email }),
       user,
     };
   }

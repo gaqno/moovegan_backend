@@ -23,8 +23,8 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    login(loginDto) {
-        return this.authService.login(loginDto);
+    login(login) {
+        return this.authService.login(login);
     }
     register(createUserDto) {
         return this.authService.register(createUserDto);
@@ -38,14 +38,14 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [login_user_dto_1.LoginDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
 __decorate([
     (0, common_1.Post)('/register'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [register_user_dto_1.CreateUserDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], AuthController.prototype, "register", null);
 __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
@@ -53,7 +53,7 @@ __decorate([
     __param(0, (0, auth_user_decorator_1.default)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Object)
+    __metadata("design:returntype", void 0)
 ], AuthController.prototype, "getLoggedUser", null);
 AuthController = __decorate([
     (0, common_1.Controller)('auth'),
