@@ -10,6 +10,7 @@
 * code by gaqno 
 * expo project based
 * back end based on nestjs ( jwt, bcrypt, prismaORM )
+* database postgress heroku 
 
 ## Installation
 
