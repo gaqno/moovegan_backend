@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = "postgres://nztqyonyysbmhx:4d26603238e8ed76ac40a746c87a966473f3e9a15a73af8f17454a1fe18a7070@ec2-52-206-182-219.compute-1.amazonaws.com:5432/d9djelrrdmgmiu"
+  shadowDatabaseUrl = "postgres://gxdypsvufpqywa:aab03206a097ec11e5d4816c82f3a0bf344d82ae9a65dc6e1bf23c84e993d4b7@ec2-54-172-175-251.compute-1.amazonaws.com:5432/dd99758sbrtf59"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  imageUrl  String?
+  role      Role     @default(USER)
+  posts     Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  published Boolean  @default(false)
+  title     String   @db.Text
+  content   String   @db.VarChar(255)
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  Int?
+}
+
+model Cards {
+  id        Int     @id @default(autoincrement())
+  published Boolean @default(false)
+  content   String  @db.VarChar(255)
+}
+
+enum Role {
+  USER
+  ADMIN
+}
