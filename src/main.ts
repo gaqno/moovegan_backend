@@ -21,6 +21,6 @@ async function App() {
   SwaggerModule.setup('v1/docs', app, document);
 
   await app.listen(3001);
-  console.log('runing on port 3001')
+  console.log('runing on port 3001');
 }
 App();
